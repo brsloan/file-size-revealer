@@ -1,13 +1,11 @@
 'use strict';
 
 var path = process.cwd();
-var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
 var fs = require('fs');
-
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 
-var type = upload.single('file');
+var fileName = upload.single('file');
 
 module.exports = function (app) {
 
@@ -17,7 +15,7 @@ module.exports = function (app) {
 		});
 		
 	app.route('/api/fileanalyze/')
-		.post(type, function(req, res){
+		.post(fileName, function(req, res){
 			var fileSize = req.file.size;
 			fs.unlink(req.file.path);
 			res.json({
